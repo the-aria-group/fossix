@@ -13,18 +13,20 @@
   &nbsp;
   <a href="https://roblox-ts.com/"><img src="https://img.shields.io/badge/roblox--ts-3.0-00A2FF?labelColor=1f2328" alt="roblox-ts"></a>
   &nbsp;
-  <a href="https://wally.run/"><img src="https://img.shields.io/badge/Wally-the--aria--group%2Ffossix-EA7600?labelColor=1f2328" alt="Wally package"></a>
+  <a href="https://wally.run/"><img src="https://img.shields.io/badge/Wally-windification%2Ffossix-EA7600?labelColor=1f2328" alt="Wally package (windification scope)"></a>
 </p>
 
 <p align="center"><em>Reliable player data for Roblox — session safety, autosave, and sane DataStore writes.</em></p>
 
 <p align="center">
-  <a href="https://github.com/the-aria-group"><strong>Aria</strong></a>
+  Part of <a href="https://github.com/the-aria-group"><strong>Aria</strong></a>
   &nbsp;·&nbsp;
   <code>roblox-ts</code>
   &nbsp;·&nbsp;
   DataStore wrapper
 </p>
+
+<p align="center"><sub>Wally registry: <code>windification/fossix</code> · npm: <code>@the-aria-group/fossix</code></sub></p>
 
 <br>
 
@@ -82,7 +84,7 @@ npm install @the-aria-group/fossix
 
 ```toml
 [dependencies]
-Fossix = "the-aria-group/fossix@1.0.0"
+Fossix = "windification/fossix@1.0.0"
 ```
 
 </td>

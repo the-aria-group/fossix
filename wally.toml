@@ -1,10 +1,26 @@
 [package]
-name = "the-aria-group/fossix"
+name = "windification/fossix"
 version = "1.0.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "server"
 license = "MIT"
 authors = ["Aria <https://github.com/the-aria-group>"]
 description = "Aria — DataStore wrapper with session locking, autosave, and optional compression."
+repository = "https://github.com/the-aria-group/fossix"
+# Required: otherwise the whole repo (including node_modules, ~78MB) is packed and exceeds Wally’s size limit.
+exclude = [
+  "node_modules",
+  "src",
+  "include",
+  "package.json",
+  "package-lock.json",
+  "tsconfig.json",
+  "eslint.config.cjs",
+  ".eslintrc.json",
+  ".prettierrc.json",
+  ".npmignore",
+  "README.md",
+  "out/tests",
+]
 
 [dependencies]
