@@ -1,0 +1,10 @@
+[package]
+name = "the-aria-group/fossix"
+version = "1.0.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "server"
+license = "MIT"
+authors = ["Aria <https://github.com/the-aria-group>"]
+description = "Aria — DataStore wrapper with session locking, autosave, and optional compression."
+
+[dependencies]
