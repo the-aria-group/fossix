@@ -14,7 +14,8 @@
     "watch": "rbxtsc --watch --noInclude",
     "typecheck": "rbxtsc --noInclude",
     "lint": "eslint \"src/**/*.ts\"",
-    "format": "prettier --write \"src/**/*.ts\" \"*.json\" \"*.md\"",
+    "format": "prettier --write \"src/**/*.ts\" \"*.json\" \"*.md\" \".github/**/*.yml\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"*.json\" \"*.md\" \".github/**/*.yml\"",
     "test": "npm run typecheck && npm run lint"
   },
   "keywords": [

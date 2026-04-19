@@ -14,6 +14,8 @@
   <a href="https://roblox-ts.com/"><img src="https://img.shields.io/badge/roblox--ts-3.0-00A2FF?labelColor=1f2328" alt="roblox-ts"></a>
   &nbsp;
   <a href="https://wally.run/"><img src="https://img.shields.io/badge/Wally-windification%2Ffossix-EA7600?labelColor=1f2328" alt="Wally package (windification scope)"></a>
+  &nbsp;
+  <a href="https://github.com/the-aria-group/fossix/actions/workflows/ci.yml"><img src="https://github.com/the-aria-group/fossix/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
 </p>
 
 <p align="center"><em>Reliable player data for Roblox — session safety, autosave, and sane DataStore writes.</em></p>
@@ -159,5 +161,16 @@ Use Fossix in <strong>server</strong> scripts. Store serializable tables — not
 </ol>
 
 <p>Here, <code>npm test</code> is compile + ESLint only. Published npm packages omit compiled specs (<code>.npmignore</code>). If you republish <code>out/</code> for another registry, drop <code>out/tests</code> unless you want specs shipped.</p>
+
+</details>
+
+<details>
+<summary><strong>For maintainers — CI/CD and publishing</strong></summary>
+
+<p><strong>Continuous integration</strong> (<code>.github/workflows/ci.yml</code>) runs on pull requests and pushes to <code>main</code>/<code>master</code>: <code>npm ci</code>, Prettier check, <code>rbxtsc</code> build, then typecheck + ESLint (<code>npm test</code>).</p>
+
+<p><strong>npm</strong> — On <strong>GitHub Release → Publish</strong>, <code>.github/workflows/release.yml</code> builds and runs <code>npm publish</code>. Add repository secret <code>NPM_TOKEN</code> (automation token with publish rights for <code>@the-aria-group</code>). Align <code>package.json</code> version with the release tag before publishing.</p>
+
+<p><strong>Wally</strong> — Use <strong>Actions → Release → Run workflow</strong> and choose <code>wally</code> or <code>both</code>. Set secret <code>WALLY_AUTH</code> to the full contents of your local <code>~/.wally/auth.toml</code> (same as <code>wally login</code>). Update <code>WALLY_VERSION</code> in the workflow if you move to a newer CLI.</p>
 
 </details>

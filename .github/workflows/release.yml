@@ -1,0 +1,106 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: What to publish
+        required: true
+        type: choice
+        options:
+          - npm
+          - wally
+          - both
+
+env:
+  WALLY_VERSION: v0.3.2
+
+concurrency:
+  group: release-${{ github.event.release.tag_name || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  publish-npm:
+    name: Publish to npm
+    if: |
+      (github.event_name == 'release') ||
+      (github.event_name == 'workflow_dispatch' && (inputs.target == 'npm' || inputs.target == 'both'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify (typecheck & lint)
+        run: npm run test
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-wally:
+    name: Publish to Wally
+    if: |
+      github.event_name == 'workflow_dispatch' &&
+      (inputs.target == 'wally' || inputs.target == 'both')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Wally CLI
+        run: |
+          curl -sL "https://github.com/UpliftGames/wally/releases/download/${WALLY_VERSION}/wally-${WALLY_VERSION}-linux.zip" -o wally.zip
+          unzip -q -o wally.zip
+          if [ ! -f ./wally ]; then
+            echo "::error::Expected ./wally after unzip (update WALLY_VERSION in release.yml if Uplift changed the archive layout)"
+            unzip -l wally.zip
+            exit 1
+          fi
+          chmod +x wally
+          echo "$(pwd)" >> "$GITHUB_PATH"
+
+      - name: Configure Wally auth
+        env:
+          WALLY_AUTH: ${{ secrets.WALLY_AUTH }}
+        run: |
+          mkdir -p "$HOME/.wally"
+          printenv WALLY_AUTH > "$HOME/.wally/auth.toml"
+
+      - name: Publish to Wally
+        run: wally publish
